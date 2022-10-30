@@ -1,11 +1,15 @@
 import "./topbar.css";
 import { Search, Person, Chat, Notifications } from "@material-ui/icons";
+import { Link } from "react-router-dom";
 
 const Topbar = () => {
+  const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
     <div className="topbarContainer">
       <div className="topbarLeft">
-        <span className="logo">Kaynat Social</span>
+        <Link to="/" style={{ textDecoration: "none" }}>
+          <span className="logo">Kaynat Social</span>
+        </Link>
       </div>
       <div className="topbarCenter">
         <div className="searchbar">
@@ -18,8 +22,12 @@ const Topbar = () => {
       </div>
       <div className="topbarRight">
         <div className="topbarLinks">
-          <span className="topbarLink">Homepage</span>
-          <span className="topbarLink">Timeline</span>
+          <Link to="/" style={{ textDecoration: "none" }}>
+            <span className="topbarLink">Homepage</span>
+          </Link>
+          <Link to="/profile/khaled" style={{ textDecoration: "none" }}>
+            <span className="topbarLink">Timeline</span>
+          </Link>
         </div>
         <div className="topbarIcons">
           <div className="topbarIconItem">
@@ -35,7 +43,11 @@ const Topbar = () => {
             <span className="topbarIconBadge">1</span>
           </div>
         </div>
-        <img className="topbarImg" src="/assets/person/2.jpeg" alt="" />
+        <img
+          className="topbarImg"
+          src={PUBLIC_FOLDER + "person/2.jpeg"}
+          alt=""
+        />
       </div>
     </div>
   );

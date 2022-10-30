@@ -5,7 +5,6 @@ import Register from "./pages/register/Register";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 function App() {
-  console.log("hello");
   const loggedInUser = false;
   const isNewRegistered = false;
   return (

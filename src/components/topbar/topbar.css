@@ -52,6 +52,7 @@
 .topbarLink{
     margin-right: 10px;
     font-size: 14px;
+    color: white;
     cursor: pointer;
 }
 .topbarIcons{
