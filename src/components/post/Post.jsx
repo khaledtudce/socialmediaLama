@@ -2,6 +2,8 @@ import "./post.css";
 import { MoreVert } from "@material-ui/icons";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { format } from "timeago.js";
+import { Link } from "react-router-dom";
 
 const Post = ({ post }) => {
   const [user, setUser] = useState({});
@@ -27,13 +29,15 @@ const Post = ({ post }) => {
       <div className="postWrapper">
         <div className="postTop">
           <div className="postTopleft">
-            <img
-              src={PUBLIC_FOLDER + user.profilePicture}
-              alt=""
-              className="postProfileImg"
-            />
+            <Link to={`/profile/${user.username}`}>
+              <img
+                src={PUBLIC_FOLDER + user.profilePicture}
+                alt=""
+                className="postProfileImg"
+              />
+            </Link>
             <span className="postUsername">{user.username}</span>
-            <span className="postDate">{post.date}</span>
+            <span className="postDate">{format(post.createdAt)}</span>
           </div>
           <div className="postTopRight">
             <MoreVert />
