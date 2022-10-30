@@ -3,16 +3,21 @@ import { Users } from "../../dummyData";
 import Online from "../online/Online";
 
 const Rightbar = ({ profile }) => {
+  const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
   const HomeRightbar = () => {
     return (
       <>
         <div className="birthdayContainer">
-          <img className="birthdayImg" src="/assets/gift.png" alt="" />
+          <img
+            className="birthdayImg"
+            src={PUBLIC_FOLDER + "gift.png"}
+            alt=""
+          />
           <span className="birthdayText">
             <b>Pola Folster</b> and <b>3 friends</b> have birthday today.
           </span>
         </div>
-        <img className="rightbarAd" src="/assets/ad.png" alt="" />
+        <img className="rightbarAd" src={PUBLIC_FOLDER + "ad.png"} alt="" />
         <h4 className="rightbarTitle">Online Friends</h4>
         <ul className="rightbarFriendList">
           {Users.map((user) => (
@@ -45,7 +50,7 @@ const Rightbar = ({ profile }) => {
         <div className="rightbarFollowings">
           <div className="rightbarFollowing">
             <img
-              src="/assets/person/1.jpeg"
+              src={PUBLIC_FOLDER + "person/1.jpeg"}
               alt=""
               className="rightbarFollowingImg"
             />
@@ -53,7 +58,7 @@ const Rightbar = ({ profile }) => {
           </div>
           <div className="rightbarFollowing">
             <img
-              src="/assets/person/1.jpeg"
+              src={PUBLIC_FOLDER + "person/1.jpeg"}
               alt=""
               className="rightbarFollowingImg"
             />
@@ -61,7 +66,7 @@ const Rightbar = ({ profile }) => {
           </div>
           <div className="rightbarFollowing">
             <img
-              src="/assets/person/1.jpeg"
+              src={PUBLIC_FOLDER + "person/1.jpeg"}
               alt=""
               className="rightbarFollowingImg"
             />
@@ -69,7 +74,7 @@ const Rightbar = ({ profile }) => {
           </div>
           <div className="rightbarFollowing">
             <img
-              src="/assets/person/1.jpeg"
+              src={PUBLIC_FOLDER + "person/1.jpeg"}
               alt=""
               className="rightbarFollowingImg"
             />
