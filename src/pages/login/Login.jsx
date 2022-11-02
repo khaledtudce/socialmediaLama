@@ -44,7 +44,7 @@ const Login = () => {
               ref={password}
               required
             ></input>
-            <button className="loginButon" disabled={isFetching}>
+            <button className="loginButon" disabled={isFetching} type="submit">
               {isFetching ? (
                 <CircularProgress color="white" size="20px" />
               ) : (
