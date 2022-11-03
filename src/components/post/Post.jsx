@@ -1,25 +1,36 @@
 import "./post.css";
 import { MoreVert } from "@material-ui/icons";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 const Post = ({ post }) => {
-  const [user, setUser] = useState({});
-  const [like, setLike] = useState(post.like);
+  const [userWhoPosted, setUserWhoPosted] = useState({});
+  const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
   const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
+  const { user: currentUser } = useContext(AuthContext);
+
+  useEffect(() => {
+    setIsLiked(post.likes.includes(currentUser._id));
+  }, [currentUser, post.likes]);
 
   useEffect(() => {
     const fetchPost = async () => {
       const res = await axios.get("/users/" + post.userId);
-      setUser(res.data);
+      setUserWhoPosted(res.data);
     };
     fetchPost();
   }, [post]);
 
-  const handleClick = () => {
+  const likeHandle = async () => {
+    try {
+      await axios.put("/posts/" + post._id + "/like", {
+        userId: currentUser._id,
+      });
+    } catch (error) {}
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
   };
@@ -29,14 +40,19 @@ const Post = ({ post }) => {
       <div className="postWrapper">
         <div className="postTop">
           <div className="postTopleft">
-            <Link to={`/profile/${user.username}`}>
+            <Link to={`/profile/${userWhoPosted.username}`}>
               <img
-                src={PUBLIC_FOLDER + user.profilePicture}
+                src={
+                  PUBLIC_FOLDER +
+                  (userWhoPosted.profilePicture
+                    ? userWhoPosted.profilePicture
+                    : "person/noAvater.jpeg")
+                }
                 alt=""
                 className="postProfileImg"
               />
             </Link>
-            <span className="postUsername">{user.username}</span>
+            <span className="postUsername">{userWhoPosted.username}</span>
             <span className="postDate">{format(post.createdAt)}</span>
           </div>
           <div className="postTopRight">
@@ -53,13 +69,13 @@ const Post = ({ post }) => {
               className="likeIcon"
               src={PUBLIC_FOLDER + "like.png"}
               alt=""
-              onClick={() => handleClick()}
+              onClick={() => likeHandle()}
             />
             <img
               className="heartIcon"
               src={PUBLIC_FOLDER + "heart.png"}
               alt=""
-              onClick={() => handleClick()}
+              onClick={() => likeHandle()}
             />
             <span className="likeCounter">{like} people liked it</span>
           </div>
