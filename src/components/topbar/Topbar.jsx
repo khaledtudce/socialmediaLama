@@ -23,12 +23,15 @@ const Topbar = () => {
           />
         </div>
       </div>
-      <div className="topbarRight"> 
+      <div className="topbarRight">
         <div className="topbarLinks">
           <Link to="/" style={{ textDecoration: "none" }}>
             <span className="topbarLink">Homepage</span>
           </Link>
-          <Link to="/profile/khaled" style={{ textDecoration: "none" }}>
+          <Link
+            to={"/profile/" + user.username}
+            style={{ textDecoration: "none" }}
+          >
             <span className="topbarLink">Timeline</span>
           </Link>
         </div>
@@ -37,10 +40,13 @@ const Topbar = () => {
             <Person />
             <span className="topbarIconBadge">1</span>
           </div>
-          <div className="topbarIconItem">
-            <Chat />
-            <span className="topbarIconBadge">2</span>
-          </div>
+          <Link to="/messenger" style={{ textDecoration: "none" }}>
+            <div className="topbarIconItem">
+              <Chat />
+              <span className="topbarIconBadge">2</span>
+            </div>
+          </Link>
+
           <div className="topbarIconItem">
             <Notifications />
             <span className="topbarIconBadge">1</span>
