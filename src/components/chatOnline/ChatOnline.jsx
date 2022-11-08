@@ -12,7 +12,7 @@ const ChatOnline = () => {
           />
           <div className="chatOnlineBadge"></div>
         </div>
-        <span className="chatOnlineName">john doe</span>
+        <span className="chatOnlineName">John Doe</span>
       </div>
     </div>
   );
