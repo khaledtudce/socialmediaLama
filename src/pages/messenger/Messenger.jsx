@@ -16,14 +16,33 @@ const Messenger = () => {
   const [currentChat, setCurrentChat] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-  const [socket, setSocket] = useState(null);
+  const [arrivalMessage, setArrivalMessage] = useState(null);
+  const socket = useRef();
   const scrollRef = useRef();
 
   useEffect(() => {
-    setSocket(io("ws://localhost:8900"));
+    socket.current = io("ws://localhost:8900");
+    socket.current.on("getMessage", (data) => {
+      setArrivalMessage({
+        sender: data.senderId,
+        text: data.text,
+        createdAt: Date.now(),
+      });
+    });
   }, []);
 
-  console.log(socket);
+  useEffect(() => {
+    setArrivalMessage &&
+      currentChat?.members.includes(arrivalMessage?.sender) &&
+      setMessages((prev) => [...prev, arrivalMessage]);
+  }, [arrivalMessage, currentChat]);
+
+  useEffect(() => {
+    socket.current.emit("addUser", user._id);
+    socket.current.on("getUsers", (users) => {
+      console.log(users);
+    });
+  });
 
   useEffect(() => {
     const getConversations = async () => {
@@ -60,6 +79,16 @@ const Messenger = () => {
       sender: user._id,
       text: newMessage,
     };
+
+    const receiverId = currentChat.members.find(
+      (member) => member !== user._id
+    );
+    socket.current.emit("sendMessage", {
+      senderId: user._id,
+      receiverId: receiverId,
+      text: newMessage,
+    });
+
     try {
       const res = await axios.post("/messages", message);
       setMessages([...messages, res.data]);
